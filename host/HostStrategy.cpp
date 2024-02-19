@@ -25,9 +25,14 @@ void HostStrategy::run() {
             size_t length = socket.receive_from(boost::asio::buffer(buffer), sender_endpoint);
             std::string message(buffer, length);
             std::cout << "Received message: " << message << std::endl;
+
+            if (message.find("setup-dht") == 0) {
+                int num_peers = 3; // Simplified for now
+                std::cout << "Setting up DHT with " << num_peers << " peers" << std::endl;
+                // Setup logic here
+            }
         }
     }).detach();
 
-    // Simulate host running
     std::this_thread::sleep_for(std::chrono::seconds(30));
 }
