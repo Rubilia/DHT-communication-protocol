@@ -27,9 +27,11 @@ void HostStrategy::run() {
             std::cout << "Received message: " << message << std::endl;
 
             if (message.find("setup-dht") == 0) {
-                int num_peers = 3; // Simplified for now
+                int num_peers = 3;
                 std::cout << "Setting up DHT with " << num_peers << " peers" << std::endl;
-                // Setup logic here
+            } else if (message.find("query-dht") == 0) {
+                std::cout << "Querying DHT for event" << std::endl;
+                // DHT query logic here
             }
         }
     }).detach();
