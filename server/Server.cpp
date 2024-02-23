@@ -1,5 +1,6 @@
 #include "Server.h"
 #include <iostream>
+#include <boost/system/error_code.hpp>
 
 using boost::asio::ip::udp;
 
@@ -21,13 +22,18 @@ void Server::handle_receive() {
             std::cout << "Received message: " << message << std::endl;
 
             if (message.find("register") == 0) {
-                // Extract peer info and register
-                std::string peer_name = "peer1"; // Simplified for now
-                peer_storage.register_peer(PeerInfo(peer_name, sender_endpoint.address().to_string(), sender_endpoint.port(), 1));
-                std::cout << "Peer registered: " << peer_name << std::endl;
+                std::string peer_name = "peer1"; 
+                if (!peer_storage.is_peer_registered(peer_name)) {
+                    peer_storage.register_peer(PeerInfo(peer_name, sender_endpoint.address().to_string(), sender_endpoint.port(), 1));
+                    std::cout << "Peer registered: " << peer_name << std::endl;
+                } else {
+                    std::cerr << "Error: Peer already registered!" << std::endl;
+                }
             }
 
             handle_receive();
+        } else {
+            std::cerr << "Error receiving data: " << error.message() << std::endl;
         }
     });
 }
