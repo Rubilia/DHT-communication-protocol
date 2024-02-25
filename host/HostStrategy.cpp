@@ -29,9 +29,10 @@ void HostStrategy::run() {
             if (message.find("setup-dht") == 0) {
                 int num_peers = 3;
                 std::cout << "Setting up DHT with " << num_peers << " peers" << std::endl;
-            } else if (message.find("query-dht") == 0) {
-                std::cout << "Querying DHT for event" << std::endl;
-                // DHT query logic here
+            } else if (message.find("teardown-dht") == 0) {
+                std::cout << "Tearing down DHT..." << std::endl;
+                ring_manager.clear_peers();  // Teardown logic
+                std::cout << "DHT teardown complete!" << std::endl;
             }
         }
     }).detach();

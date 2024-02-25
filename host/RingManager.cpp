@@ -8,6 +8,10 @@ void RingManager::add_peer(const PeerInfo& peer) {
 
 void RingManager::update_neighbors(int peer_id) {
     this->peer_id = peer_id;
-    // Logic to update neighbors
     std::cout << "Updated neighbors for peer: " << peer_id << std::endl;
+}
+
+void RingManager::clear_peers() {
+    peers.clear();
+    std::cout << "All peers cleared from the ring" << std::endl;
 }
