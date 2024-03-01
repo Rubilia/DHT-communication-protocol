@@ -26,9 +26,9 @@ void HostStrategy::run() {
             std::string message(buffer, length);
             std::cout << "Received message: " << message << std::endl;
 
-            if (message.find("pass-message") == 0) {
-                std::cout << "Passing message to the next peer..." << std::endl;
-                ring_manager.send_message_to_next_peer("Hello from peer!");
+            if (message.find("store-data") == 0) {
+                std::string data = message.substr(message.find(" ") + 1);
+                ring_manager.store_data_in_peer(data);
             }
         }
     }).detach();
