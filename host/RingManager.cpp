@@ -1,8 +1,5 @@
 #include "RingManager.h"
 #include <iostream>
-#include <map>
-
-std::map<int, std::string> data_store;
 
 void RingManager::add_peer(const PeerInfo& peer) {
     peers.push_back(peer);
@@ -19,8 +16,7 @@ void RingManager::clear_peers() {
     std::cout << "All peers cleared from the ring" << std::endl;
 }
 
-void RingManager::store_data_in_peer(const std::string& data) {
-    int hash_key = std::hash<std::string>{}(data) % peers.size();
-    data_store[hash_key] = data;
-    std::cout << "Data stored in peer with hash: " << hash_key << std::endl;
+void RingManager::remove_peer(const std::string& name) {
+    peers.erase(std::remove_if(peers.begin(), peers.end(), [&](const PeerInfo& p) { return p.name == name; }), peers.end());
+    std::cout << "Peer removed: " << name << std::endl;
 }

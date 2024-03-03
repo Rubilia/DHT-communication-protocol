@@ -26,9 +26,9 @@ void HostStrategy::run() {
             std::string message(buffer, length);
             std::cout << "Received message: " << message << std::endl;
 
-            if (message.find("store-data") == 0) {
-                std::string data = message.substr(message.find(" ") + 1);
-                ring_manager.store_data_in_peer(data);
+            if (message.find("leave-dht") == 0) {
+                std::cout << "Leaving DHT..." << std::endl;
+                ring_manager.remove_peer("peer1");
             }
         }
     }).detach();
