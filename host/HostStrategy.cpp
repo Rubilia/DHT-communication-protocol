@@ -26,9 +26,9 @@ void HostStrategy::run() {
             std::string message(buffer, length);
             std::cout << "Received message: " << message << std::endl;
 
-            if (message.find("leave-dht") == 0) {
-                std::cout << "Leaving DHT..." << std::endl;
-                ring_manager.remove_peer("peer1");
+            if (message.find("elect-leader") == 0) {
+                std::cout << "Starting leader election..." << std::endl;
+                ring_manager.elect_leader();
             }
         }
     }).detach();

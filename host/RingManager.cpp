@@ -16,7 +16,11 @@ void RingManager::clear_peers() {
     std::cout << "All peers cleared from the ring" << std::endl;
 }
 
-void RingManager::remove_peer(const std::string& name) {
-    peers.erase(std::remove_if(peers.begin(), peers.end(), [&](const PeerInfo& p) { return p.name == name; }), peers.end());
-    std::cout << "Peer removed: " << name << std::endl;
+void RingManager::elect_leader() {
+    if (peers.empty()) {
+        std::cout << "No peers to elect as leader." << std::endl;
+        return;
+    }
+    PeerInfo new_leader = peers[0]; // Simplified leader election
+    std::cout << "Peer " << new_leader.to_string() << " elected as leader." << std::endl;
 }
