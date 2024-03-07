@@ -16,11 +16,10 @@ void RingManager::clear_peers() {
     std::cout << "All peers cleared from the ring" << std::endl;
 }
 
-void RingManager::elect_leader() {
-    if (peers.empty()) {
-        std::cout << "No peers to elect as leader." << std::endl;
-        return;
+void RingManager::rebuild_dht() {
+    std::cout << "Rebuilding the DHT with current peers." << std::endl;
+    // Rebuild logic (simple re-addition of peers)
+    for (auto& peer : peers) {
+        std::cout << "Peer re-added: " << peer.to_string() << std::endl;
     }
-    PeerInfo new_leader = peers[0]; // Simplified leader election
-    std::cout << "Peer " << new_leader.to_string() << " elected as leader." << std::endl;
 }
