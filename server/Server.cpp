@@ -21,14 +21,12 @@ void Server::handle_receive() {
             std::string message(buffer, length);
             std::cout << "Received message: " << message << std::endl;
 
-            if (message.find("register") == 0) {
-                std::string peer_name = "peer1"; 
-                if (!peer_storage.is_peer_registered(peer_name)) {
-                    peer_storage.register_peer(PeerInfo(peer_name, sender_endpoint.address().to_string(), sender_endpoint.port(), 1));
-                    std::cout << "Peer registered: " << peer_name << std::endl;
-                } else {
-                    std::cerr << "Error: Peer already registered!" << std::endl;
-                }
+            if (message.find("teardown-complete") == 0) {
+                std::cout << "Teardown completed successfully." << std::endl;
+            } else if (message.find("teardown-dht") == 0) {
+                std::cout << "Tearing down DHT..." << std::endl;
+                // Send confirmation
+                socket.send_to(boost::asio::buffer("teardown-complete"), sender_endpoint);
             }
 
             handle_receive();
