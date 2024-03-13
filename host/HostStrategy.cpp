@@ -26,9 +26,14 @@ void HostStrategy::run() {
             std::string message(buffer, length);
             std::cout << "Received message: " << message << std::endl;
 
-            if (message.find("rebuild-dht") == 0) {
-                std::cout << "Rebuilding DHT..." << std::endl;
-                ring_manager.rebuild_dht();
+            if (message.find("query-peer") == 0) {
+                std::string peer_name = message.substr(message.find(" ") + 1);
+                try {
+                    PeerInfo peer = ring_manager.get_peer_by_name(peer_name);
+                    std::cout << "Peer found: " << peer.to_string() << std::endl;
+                } catch (const std::exception& e) {
+                    std::cerr << "Error: " << e.what() << std::endl;
+                }
             }
         }
     }).detach();
